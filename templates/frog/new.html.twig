@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Frog{% endblock %}
+
+{% block body %}
+    <h1>Create new Frog</h1>
+
+    {{ include('frog/_form.html.twig') }}
+
+    <a href="{{ path('app_frog_index') }}">back to list</a>
+{% endblock %}

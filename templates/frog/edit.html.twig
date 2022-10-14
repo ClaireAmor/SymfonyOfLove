@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Frog{% endblock %}
+
+{% block body %}
+    <h1>Edit Frog</h1>
+
+    {{ include('frog/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_frog_index') }}">back to list</a>
+
+    {{ include('frog/_delete_form.html.twig') }}
+{% endblock %}
