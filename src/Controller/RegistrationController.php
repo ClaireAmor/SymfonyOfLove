@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Frog;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,27 +20,53 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form = $this->createForm(UserType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            dump($form->getData());
+            $user = $form->getData();
             // encode the plain password
-            $user->setPassword(
+            /* $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            );
+            );*/
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('app_user_show', [
+                'id' => $user->getId()
+            ]);
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    public function createUser(Frog $frog, string $email, string $name, string $password)
+    {
+        $user = new User();
+        $user->setFrog($frog);
+        $user->setEmail($email);
+        $user->setName($name);
+        $user->setPassword($password);
+
+        return $user;
+    }
+
+    public function createFrog(string $specie, string $color, int $size)
+    {
+        $frog = new Frog();
+        $frog->setSpecie($specie);
+        $frog->setSkinColor($color);
+        $frog->setSize($size);
+
+        return $frog;
     }
 }
