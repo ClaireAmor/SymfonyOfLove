@@ -13,11 +13,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/frog')]
 class FrogController extends AbstractController
 {
-    #[Route('/', name: 'app_frog_index', methods: ['GET'])]
-    public function index(FrogRepository $frogRepository): Response
+    #[Route('/', name: 'app_frog_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, FrogRepository $frogRepository): Response
     {
+        $frog = new Frog();
+        $form = $this->createForm(FrogType::class, $frog);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            return $this->render('frog/index.html.twig', [
+                'frogs' => $frogRepository->findAll(),
+                'form' => $form,
+            ]);
+        }
+
         return $this->render('frog/index.html.twig', [
             'frogs' => $frogRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 

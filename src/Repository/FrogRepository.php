@@ -39,6 +39,31 @@ class FrogRepository extends ServiceEntityRepository
         }
     }
 
+    public function findSearch(Frog $entity) {
+        $query = $this
+        ->createQueryBuilder('f');
+
+        if (!empty($entity->specie)) {
+            $query = $query
+                ->andWhere('f.specie = :specie')
+                ->setParameter('specie', $entity->specie);
+        }
+
+        if (!empty($entity->size)) {
+            $query = $query
+                ->andWhere('f.size = :size')
+                ->setParameter('size', $entity->size);
+        }
+
+        if (!empty($entity->skinColor)) {
+            $query = $query
+                ->andWhere('f.skinColor = :skinColor')
+                ->setParameter('skinColor', $entity->skinColor);
+        }
+
+        return $query;
+    }
+
 //    /**
 //     * @return Frog[] Returns an array of Frog objects
 //     */
