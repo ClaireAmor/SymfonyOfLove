@@ -11,14 +11,42 @@ class FrogFixtures extends Fixture
     public const FROG1_REFERENCE = "frog1";
     public function load(ObjectManager $manager): void
     {
-        $frog1 = $this->createFrog("Rana ridibunda", "blue", 12);
-        $frog2 = $this->createFrog("Pelophylax lessonae", "red", 23);
-
-        $manager->persist($frog1);
-        $manager->persist($frog2);
-        $manager->flush();
-
-        $this->addReference(self::FROG1_REFERENCE, $frog1);
+        $species = array(
+            'Rainette méridionale',
+            'Rainette ibérique',
+            'Rainette sarde',
+            'Grenouille taureau',
+            'Grenouille de Lessona',
+            'Grenouille rieuse',
+            'Sonneur à ventre jaune',
+            'Crapaud commun',
+        );
+        $color = array(
+            'blue',
+            'green',
+            'yellow',
+            'red',
+            'pink',
+            'gray',
+            'black',
+            'white',
+        );
+        $size = array(
+            3,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+        );
+        for ($count = 0; $count < 20; $count++) {
+            $frog = $this->createFrog($species[array_rand($species)], $color[array_rand($color)], $size[array_rand($size)]);
+            $manager->persist($frog);
+            $this->addReference("FROG_REFERENCE" . $count, $frog);
+        }
+        $manager->flush();   
     }
 
     public function createFrog(string $specie, string $color, int $size)

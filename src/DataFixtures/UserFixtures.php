@@ -7,20 +7,28 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $userPasswordHasherInterface;
+
+    public function __construct (UserPasswordHasherInterface $userPasswordHasherInterface) 
+    {
+        $this->userPasswordHasherInterface = $userPasswordHasherInterface;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $user1 = $this->createUser(
-            $this->getReference(FrogFixtures::FROG1_REFERENCE),
-            "renette@gmaik.com",
-            "Josette",
-            "motdepasse"
-        );
-
-        $manager->persist($user1);
-
+        for ($count = 0; $count < 20; $count++) {
+            $user = $this->createUser(
+                $this->getReference("FROG_REFERENCE" . $count),
+                "user{$count}@gmail.com",
+                "user{$count}",
+                "motdepasse"
+            );
+            $manager->persist($user);
+        }
         $manager->flush();
     }
 
@@ -30,7 +38,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setFrog($frog);
         $user->setEmail($email);
         $user->setName($name);
-        $user->setPassword($password);
+        $user->setPassword(
+            $this->userPasswordHasherInterface->hashPassword(
+                $user,
+                $password
+            )
+        );
 
         return $user;
     }
