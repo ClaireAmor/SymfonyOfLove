@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Frog $frog = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?array $FrogsUserLikes = [];
 
     public function getId(): ?int
@@ -143,6 +143,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->FrogsUserLikes = $FrogsUserLikes;
 
+        return $this;
+    }
+    public function addFrogsUserLikes(?int $like): self
+    {
+        array_push($this->FrogsUserLikes, $like);
         return $this;
     }
 }

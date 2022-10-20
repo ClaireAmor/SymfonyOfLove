@@ -3,7 +3,7 @@
         <h1>Other frogs</h1>
         <h2>
             Whaou
-            
+
         </h2>
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table table-bordered table-striped mb-0 mb-0 bg-white">
@@ -25,7 +25,7 @@
                                     <td>{{ user.frog.size }}</td>
                                     <td>{{ user.frog.skinColor }}</td>
                                     <td class="d-flex">
-                                        <a href="{{ path('add_frog', {'user': app.user }) }}"  class="btn btn-success">Ajouter</a>
+                                        <a href="{{ path('add_frog', {'id': user.id }) }}"  class="btn btn-success">Ajouter</a>
                                     </td>
                                 </tr>
                             {% endif %}

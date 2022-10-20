@@ -33,6 +33,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
+    
     public function remove(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -55,6 +56,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $this->save($user, true);
     }
+
+    public function like(User $user, int $value): void
+    {
+        $user->addFrogsUserLikes($value);
+        $this->save($user, true);
+    }
+
 
 //    /**
 //     * @return User[] Returns an array of User objects

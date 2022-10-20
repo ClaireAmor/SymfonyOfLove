@@ -6,6 +6,7 @@ use App\Entity\Frog;
 use App\Entity\User;
 use App\Repository\FrogRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,9 +34,10 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/profile', name: 'add_frog')]
-    public function addFrog(User $test)
+    #[Route('/like/{id}', name: 'add_frog')]
+    public function addFrog(User $test,  UserRepository $userRepository)
     {
-        $test->setName("CARLOS");
+        $userRepository->like($this->getUser(), $test->getFrog()->getId());
+        return $this->redirectToRoute('app_profile');
     }
 }
