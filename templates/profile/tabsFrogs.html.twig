@@ -1,0 +1,38 @@
+<div class="row d-flex justify-content-center align-items-center h-100 w-50 my-5">
+    <div class="col-md-9 col-lg-9">
+        <h1>Other frogs</h1>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered table-striped mb-0 mb-0 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Specie</th>
+                            <th>Size</th>
+                            <th>SkinColor</th>
+                            <th>Like</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            {% if user.email != app.user.email %}
+                                <tr>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.frog.specie }}</td>
+                                    <td>{{ user.frog.size }}</td>
+                                    <td>{{ user.frog.skinColor }}</td>
+                                    <td class="d-flex">
+                                        <button>Like</button>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">no records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
