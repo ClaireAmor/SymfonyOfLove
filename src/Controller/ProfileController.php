@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Frog;
+use App\Entity\User;
 use App\Repository\FrogRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +25,17 @@ class ProfileController extends AbstractController
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
 
+
+
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'users' => $userRepository->findAll(),
         ]);
+    }
+
+    #[Route('/profile', name: 'add_frog')]
+    public function addFrog(User $test)
+    {
+        $test->setName("CARLOS");
     }
 }

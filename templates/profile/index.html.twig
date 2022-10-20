@@ -4,9 +4,22 @@
 
 
 {% block body %}
+    <style>
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #f6d365;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right bottom, #09793f, #00ffb7);
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right bottom, #09793f, #00ffb7)
+        }
+    </style>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div class="d-flex">
+        <div class="d-flex ">
             {% include "profile/profile.html.twig" %}
             {% include "profile/tabsFrogs.html.twig" %}
+        </div>
     {% endif %}
 {% endblock %}

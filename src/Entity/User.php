@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Frog $frog = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $FrogsUserLikes = [];
 
     public function getId(): ?int
     {
@@ -126,6 +130,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFrog(Frog $frog): self
     {
         $this->frog = $frog;
+
+        return $this;
+    }
+
+    public function getFrogsUserLikes(): array
+    {
+        return $this->FrogsUserLikes;
+    }
+
+    public function setFrogsUserLikes(?array $FrogsUserLikes): self
+    {
+        $this->FrogsUserLikes = $FrogsUserLikes;
 
         return $this;
     }
