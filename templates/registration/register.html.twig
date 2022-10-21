@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <style>
+        #registration_form div { margin: 15px; }
+        input { margin-left: 15px; }
+    </style>
+    
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+            <h1>Register</h1>
+            {{ form(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

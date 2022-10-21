@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -33,6 +34,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
+    
     public function remove(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -55,6 +57,42 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $this->save($user, true);
     }
+
+    public function like(User $user, int $value): void
+    {
+        $user->addFrogsUserLikes($value);
+        $this->save($user, true);
+    }
+
+    public function findSearch(SearchData $search)
+    {
+
+        $query = $this
+            ->createQueryBuilder('u')
+            ->select('u', 'f')
+            ->join('u.frog', 'f');
+
+        if (!empty($search->specie)) {
+            $query = $query
+                ->andWhere('f.specie LIKE :specie')
+                ->setParameter('specie', "%{$search->specie}%");
+        }
+
+        if (!empty($search->size)) {
+            $query = $query
+                ->andWhere('f.size = :size')
+                ->setParameter('size', $search->size);
+        }
+
+        if (!empty($search->color)) {
+            $query = $query
+                ->andWhere('f.skinColor in (:color)')
+                ->setParameter('color', $search->color);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 
 //    /**
 //     * @return User[] Returns an array of User objects

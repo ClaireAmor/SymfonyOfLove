@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My likes{% endblock %}
+
+{% block body %}
+<style>
+    my-custom-scrollbar { position: relative; height: 200px; overflow: auto; }
+    table-wrapper-scroll-y { display: block; }
+</style>
+
+<div class="row d-flex justify-content-center align-items-center h-100 my-5">
+    <div class="col-md-9 col-lg-6 col-xl-5">
+        <h1>My likes</h1>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-bordered table-striped mb-0 mb-0 bg-white">
+            <thead class="bg-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Specie</th>
+                    <th>Size</th>
+                    <th>SkinColor</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for frog in frogs %}
+                <tr>
+                    <td>{{ frog.id }}</td>
+                    <td>{{ frog.specie }}</td>
+                    <td>{{ frog.size }}</td>
+                    <td>{{ frog.skinColor }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+{% endblock %}
