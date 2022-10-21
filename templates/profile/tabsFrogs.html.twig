@@ -17,6 +17,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{ form(form) }}
                         {% for user in users %}
                             {% if user.email != app.user.email and user.frog.id not in app.user.FrogsUserLikes %}
                                 <tr>
