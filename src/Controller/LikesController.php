@@ -13,7 +13,7 @@ class LikesController extends AbstractController
     public function index(FrogRepository $frogRepository): Response
     {
         return $this->render('likes/index.html.twig', [
-            'frogs' => $frogRepository->findAll(),
+            'frogs' => $frogRepository->findBy(array('id' => $this->getUser()->getFrogsUserLikes()))
         ]);
     }
 }
