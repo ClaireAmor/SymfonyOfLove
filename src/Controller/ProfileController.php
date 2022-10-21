@@ -34,7 +34,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/like/{id}', name: 'add_frog')]
+    #[Route('/profile/like/{id}', name: 'add_frog')]
     public function addFrog(User $test,  UserRepository $userRepository)
     {
         $userRepository->like($this->getUser(), $test->getFrog()->getId());
