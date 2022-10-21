@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class SearchForm extends AbstractType
 {
@@ -32,9 +33,20 @@ class SearchForm extends AbstractType
                     'placeholder' => 'size'
                 ]
             ])
-            ->add('color', TextType::class, [
+            ->add('color', ChoiceType::class, [
+                'choices' => [
+                    'blue' =>'blue',
+                    'green' =>'green',
+                    'yellow' =>'yellow',
+                    'red' =>'red',
+                    'pink' =>'pink',
+                    'gray' =>'gray',
+                    'black' =>'black',
+                    'white' =>'white',
+                ],
                 'label' => false,
                 'required' => false,
+                'multiple'=>true,
                 'attr' => [
                     'placeholder' => 'color'
                 ]

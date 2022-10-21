@@ -14,8 +14,8 @@ class SearchData
     public $size;
 
     /**
-     * @var string
+     * @var array
      */
-    public $color = '';
+    public $color = [];
 
 }

@@ -86,8 +86,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         if (!empty($search->color)) {
             $query = $query
-                ->andWhere('f.skinColor LIKE :color')
-                ->setParameter('color', "%{$search->color}%");
+                ->andWhere('f.skinColor in (:color)')
+                ->setParameter('color', $search->color);
         }
 
         return $query->getQuery()->getResult();
