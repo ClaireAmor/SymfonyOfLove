@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                         {% for user in users %}
-                            {% if user.email != app.user.email %}
+                            {% if user.email != app.user.email and user.frog.id not in app.user.FrogsUserLikes %}
                                 <tr>
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.frog.specie }}</td>
